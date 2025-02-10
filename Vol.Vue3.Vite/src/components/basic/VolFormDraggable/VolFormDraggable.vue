@@ -250,6 +250,7 @@
                       :index="item.edit"
                       :tableData="item.tableData"
                       :columns="item.columns"
+                      :buttons="item.buttons.filter((item)=>item.ck)"
                       :height="item.height"
                       :pagination-hide="true"
                       :column-index="item.columnIndex"
@@ -471,6 +472,7 @@
           表格默认功能按钮：
           <el-checkbox
             v-for="item in currentItem.buttons"
+            v-model="item.ck"
             :label="item.name"
             :key="item.name"
             >{{ item.name }}</el-checkbox
@@ -739,7 +741,7 @@ export default {
             url: m.url,
             tabs: m.tabs,
             pagination: m.pagination,
-            buttons: m.buttons,
+            buttons: m.buttons.filter((x) =>x.ck==true),
             columns: m.columns.map((c) => {
               let obj = {
                 title: c.title,

@@ -19,19 +19,7 @@
           <div class="header-text">
             {{ item.name }}
           </div>
-          <div class="header-btns">
-            <el-button
-              type="primary"
-              size="small"
-              :key="bindex"
-              plain
-              @click="tableBtnClick(item, bindex, index)"
-              :icon="btnItem.icon"
-              v-for="(btnItem, bindex) in item.buttons"
-            >
-              {{ btnItem.name }}
-            </el-button>
-          </div>
+          
         </div>
         <vol-table
           :url="item.url"
@@ -40,6 +28,7 @@
           :ref="'table' + index"
           :tableData="item.tableData"
           :columns="item.columns"
+          :buttons="item.buttons.filter((item)=>item.ck)"
           :max-height="250"
           :pagination-hide="item.pagination"
           :column-index="true"
@@ -63,22 +52,6 @@
           :key="index"
         >
           <div class="table-header">
-            <div class="header-text">
-              {{ item.name }}
-            </div>
-            <div class="header-btns">
-              <el-button
-                type="primary"
-                size="small"
-                :key="bindex"
-                :icon="btnItem.icon"
-                plain
-                @click="tabsTableBtnClick(item, bindex, index)"
-                v-for="(btnItem, bindex) in item.buttons"
-              >
-                {{ btnItem.name }}
-              </el-button>
-            </div>
           </div>
           <vol-table
             :url="item.url"
@@ -87,6 +60,7 @@
             :ref="'tabsTable' + index"
             :tableData="item.tableData"
             :columns="item.columns"
+            :buttons="item.buttons.filter((item)=>item.ck)"
             :max-height="250"
             :pagination-hide="item.pagination"
             :column-index="true"
@@ -144,21 +118,21 @@ export default {
   methods: {
     tableBtnClick(item, btnIndex, index) {
       if (item.buttons[btnIndex].value == "add") {
-        this.$refs["table" + index].addRow({});
+        this.$refs["table" + index][0].addRow({});
         return;
       }
       if (item.buttons[btnIndex].value == "del") {
-        this.$refs["table" + index].delRow();
+        this.$refs["table" + index][0].delRow();
         return;
       }
     },
     tabsTableBtnClick(item, btnIndex, index) {
       if (item.buttons[btnIndex].value == "add") {
-        this.$refs["tabsTable" + index].addRow({});
+        this.$refs["tabsTable" + index][0].addRow({});
         return;
       }
       if (item.buttons[btnIndex].value == "del") {
-        this.$refs["tabsTable" + index].delRow();
+        this.$refs["tabsTable" + index][0].delRow();
         return;
       }
     },
@@ -200,7 +174,9 @@ VolForm;
     font-weight: bold;
   }
   .header-btns {
+    flex: 1;
     text-align: right;
+    margin-right: 2%;
   }
 }
 </style>

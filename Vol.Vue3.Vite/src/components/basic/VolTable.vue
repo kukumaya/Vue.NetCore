@@ -1,5 +1,20 @@
 <template>
   <!-- 2021.11.18移除voltable方法@cell-mouse-leave="rowEndEdit" -->
+  <div class="table-header">
+    <div class="header-btns">
+      <el-button
+        type="primary"
+        size="small"
+        :key="bindex"
+        :icon="btnItem.icon"
+        plain
+        @click="tableBtnClick(bindex)"
+        v-for="(btnItem, bindex) in this.buttons"
+      >
+        {{ btnItem.name }}
+      </el-button>
+    </div>
+  </div>
   <div
     class="vol-table"
     :class="[
@@ -529,6 +544,13 @@ export default defineComponent({
         return []
       }
     },
+    buttons: {
+      // 表格按钮组
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
     columns: {
       type: Array,
       default: []
@@ -878,6 +900,16 @@ export default defineComponent({
     }
   },
   methods: {
+    tableBtnClick(btnIndex) {
+      if (this.buttons[btnIndex].value == "add") {
+        this.$refs.table.addRow({});
+        return;
+      }
+      if (this.buttons[btnIndex].value == "del") {
+        this.$refs.table.delRow();
+        return;
+      }
+    },
     initCellStyleColumns() {
       this.columns.forEach((x) => {
         if (x.cellStyle) {
@@ -2029,4 +2061,10 @@ export default defineComponent({
   padding: 0 5px !important;
   height: 19px;
 }
+.header-btns {
+    flex: 1;
+    text-align: right;
+    margin-right: 1%;
+    margin-bottom: 1%;
+  }
 </style>
