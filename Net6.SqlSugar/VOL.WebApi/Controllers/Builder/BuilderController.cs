@@ -4,6 +4,8 @@ using System;
 using System.Threading.Tasks;
 using VOL.Core.Filters;
 using VOL.Entity.DomainModels;
+using SqlSugar;
+using System.Collections.Generic;
 
 namespace VOL.WebApi.Controllers.Builder
 {
@@ -67,6 +69,12 @@ namespace VOL.WebApi.Controllers.Builder
         {
             return Json(Service.LoadTable(parentId, tableName, columnCNName, nameSpace, foldername, table_Id, isTreeLoad));
 
+        }
+        [Route("GetDbTableColumns")]
+        [HttpGet]
+        public ActionResult<List<DbColumnInfo>> GetDbTableColumns(string tableName)
+        {
+            return Json(Service.GetDbTableColumns(tableName));
         }
         [Route("delTree")]
         [ApiActionPermission(ActionRolePermission.SuperAdmin)]

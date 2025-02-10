@@ -56,6 +56,15 @@ const components = [
         icon: "el-icon-arrow-down",
     },
     {
+        id: 80,
+        name: "树形下拉",
+        type: "treeSelect",
+        key: "",
+        values: [],
+        data: [{ label: "请设置数据源", value: "请设置数据源" }],
+        icon: "el-icon-arrow-down",
+    },
+    {
         id: 81,
         name: "级联",
         type: "cascader",
@@ -209,6 +218,7 @@ const tableOption = [
             { "key": "switch", "value": "单选" },
             { "key": "select", "value": "下拉框" },
             { "key": "selectList", "value": "下拉框多选" },
+            { "key": "treeSelect", "value": "树形下拉" },
             { "key": "date", "value": "日期" },
             { "key": "datetime", "value": "日期时分秒" },
             { "key": "checkbox", "value": "复选框多选" },

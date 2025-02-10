@@ -31,6 +31,26 @@ namespace VOL.Builder.Services
         private string webProject = null;
         private string apiNameSpace = null;
         private string startName = "";
+        private string GetTableColInfoSql
+        {
+            get
+            {
+                string sql = "";
+                switch (DBType.Name)
+                {
+                    case "MySql":
+                        sql = GetMySqlModelInfo();
+                        break;
+                    case "PgSql":
+                        sql = GetPgSqlModelInfo();
+                        break;
+                    default:
+                        sql = GetSqlServerModelInfo();
+                        break;
+                }
+                return sql;
+            }
+        }
         private string StratName
         {
             get
@@ -289,20 +309,7 @@ DISTINCT
                 tableName = sysTableInfo.TableTrueName;
             }
 
-            string sql = "";
-            switch (DBType.Name)
-            {
-                case "MySql":
-                    sql = GetMySqlModelInfo();
-                    break;
-                case "PgSql":
-                    sql = GetPgSqlModelInfo();
-                    break;
-                default:
-                    sql = GetSqlServerModelInfo();
-                    break;
-            }
-            List<TableColumnInfo> tableColumnInfoList = repository.SqlSugarClient.QueryList<TableColumnInfo>(sql, new { tableName });
+            List<TableColumnInfo> tableColumnInfoList = repository.SqlSugarClient.QueryList<TableColumnInfo>(this.GetTableColInfoSql, new { tableName });
             List<Sys_TableColumn> list = sysTableInfo.TableColumns;
             string msg = CreateEntityModel(list, sysTableInfo, tableColumnInfoList, 1);
             if (msg != "")
